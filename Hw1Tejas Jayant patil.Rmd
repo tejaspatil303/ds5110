@@ -1,0 +1,140 @@
+---
+title: "HW-1 Tejas Patil"
+author: "Tejas Jayant Patil"
+date: "22 January 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+Homework 1
+
+PART A
+
+Problem 1
+
+```{r 1}
+
+aa <- mpg
+selectcols <- function(dataset,...){
+  colargument=unlist(list(...))
+  newsubset= (dataset[,colargument])
+  return(newsubset)
+}
+columnname <- selectcols(mpg,'year','drv')
+
+sample_n(columnname,5)
+is.data.frame(columnname)
+
+colnumber <- selectcols(mpg,1,2,10,11)
+sample_n(colnumber,5)
+is.data.frame(colnumber)
+
+
+```
+
+
+
+Problem 2
+
+```{r 2}
+mpg
+plotcols <- function(Data){
+  names <- names(Data)
+  for(i in names ){
+    if(is.numeric(Data[[i]])){
+      print(ggplot(Data,aes_string(i))+geom_histogram())
+      }
+  else{
+    print(ggplot(Data,aes_string(i))+geom_bar())
+  }      
+      
+    }
+}
+plotcols(mpg)
+
+```  
+
+
+PART B
+
+
+
+``` {r 3}
+##PROBLEM 3
+
+Diamondstat <- diamonds
+plot1 <-ggplot(Diamondstat,aes(x=factor(color),y=price))
+plot2 <- (plot1 + geom_boxplot(aes(fill=factor(color))))
+plot3 <-plot2 + xlab('Diamond Color(Best ---> Worst)') +
+        ylab('Diamond price in US Dollars') +ggtitle(' Diamond Color vs Price boxplot')
+plot3 
+
+```
+As seen from the documentation the color codes gives us quality of the diamond, 
+from D(Best) to J (Worst).
+
+From the plot we can infer anything , as the we can see there are lot of outliers in each plot which doesn't gives us the sufficient information to infer something.
+
+It does shows that there is great variation in the 
+prices of same type of diamond type, but doesn't indicate the reason for this vairation. 
+
+Therefore this  graph is not that helpful to study this dataframe.
+
+```{r 4}
+## PROBLEM 4
+
+df<- diamonds
+pl <-ggplot(df,aes(x=factor(color),y=carat))
+pl2<- (pl + geom_boxplot(aes(fill=factor(color))))
+pl3<-pl2 + xlab('Diamond Color  (Best ---> Worst)') +
+     ylab('Weight of Diamond in Carat') + ggtitle(' Diamond Color vs Diamond Weight')
+pl3
+
+```
+
+This graph is informative than the previous one.The outliers in this graph are less than the previous one.
+
+This is somewhat a positive type of graph,values increasing as we go  along the x axis.
+
+With this  graph we can say that the best qualities diamond are often in small carats.
+The larger the carat size the more worst the quality of Diamonds.
+
+Problem 5
+
+```{r 5}
+## PROBLEM 5
+
+df <- diamonds
+Scatterplot1<- ggplot(df,aes(x=carat,y=price))
+Scatterplot2<- Scatterplot1 + geom_point(aes(color=factor(color)))
+Scatterplot3<- Scatterplot2 + facet_grid(.~color)+ stat_smooth()
+Scatterplot4<- Scatterplot3 + xlab('Weight of Diamonds in Carats') + 
+      ylab('Price in US Dollars') + ggtitle('Comparison of Diamods (Best ---> Worst)')
+Scatterplot4
+
+```
+This graph gives us very informative insights in the Diamondstat. By comparing the different grades of diamond(Color factor D to J) along with its weight and Price we can infer a lot through this Graph. 
+
+All the Diamonds are available are same price range,the thing which factors them out is the Color grade and its weight.
+
+As we see from the graphs,one can get a (worst / best) Quality of diamond at same price, compromising its weight. Price for Large Diamond,worst Quality ~  Price for Small Diamond,Best Quality.
+
+
+
+
+Problem 5
+```{r 5b}
+##problem 5
+
+df <- diamonds
+scatter1 <-ggplot(df,aes(x=carat,y=price))
+scatter2<- scatter1 + geom_point(aes(color=factor(color),size=2))+geom_smooth()
+scatter3<- scatter2 + xlab('weight of Diamond')+ylab('Price in US Dollars')+ggtitle('weight of Diamond Vs price')
+scatter3
+
+```
